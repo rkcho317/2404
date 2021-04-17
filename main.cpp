@@ -3,16 +3,22 @@
 #include <stdint.h>
 #include <cstring>
 
-extern "C" double royal();
+extern "C" double royal(char[]);
 
 int main(int argc, char* argv[]){
     double noble=0.0;
-    string ident;
+    char ident[100];
 
     //String Blocks
     //Introduction
     string intro = printf("\nWelcome to Software Analysis by Paramount Programmers, Inc."
                            "\nPlease enter your first and last names and press enter: ");
+    
+    cin >> ident;
+    double corax;
+    corax = royal(ident);
+    cout<< corax<< name <<endl; //what is name?
+
     string intro2 = printf("\nThank you Joey Brown.  Our records show that you applied for employment her with our agency a week ago."
                             "\nPlease enter your expected annual salary when employed at Paramount: 500500.50"
                             "\nYour interview with Ms Linda Fenster, Personnel Manager, will begin shortly.");
