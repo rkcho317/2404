@@ -2,7 +2,7 @@
 
 .segment css
 
-info db "Your name is %s.   How are you?",10,0
+info db "Hello %s.   How are you?",10,0
 
 .segment text
 
