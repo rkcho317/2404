@@ -11,21 +11,18 @@ int main(int argc, char* argv[]){
 
     //String Blocks
     //Introduction
-    string intro = printf("\nWelcome to Software Analysis by Paramount Programmers, Inc."
-                           "\nPlease enter your first and last names and press enter: ");
+    std::string intro = printf("\nWelcome to Software Analysis by Paramount Programmers, Inc.\nPlease enter your first and last names and press enter: ");
     
-    cin >> ident;
+    std::cin >> ident;
     double corax;
-    corax = royal(ident);
-    cout<< corax<< name <<endl; //what is name?
 
-    string intro2 = printf("\nThank you Joey Brown.  Our records show that you applied for employment her with our agency a week ago."
-                            "\nPlease enter your expected annual salary when employed at Paramount: 500500.50"
-                            "\nYour interview with Ms Linda Fenster, Personnel Manager, will begin shortly.");
+    std::cout<< corax <<std::endl; //what is name?
+
+    std::string intro2 = printf("\nThank you Joey Brown.  Our records show that you applied for employment her with our agency a week ago. \nPlease enter your expected annual salary when employed at Paramount: %int. \nYour interview with Ms Linda Fenster, Personnel Manager, will begin shortly.");
 
     //switch case
-    switch (ident){
-        case 1: //CS Major
+    switch (corax){
+        case "CS Major": //CS Major
         intro;
         intro2;
         //interview output
@@ -38,7 +35,7 @@ int main(int argc, char* argv[]){
 
         case 2: //Chris Sawyer
         intro;
-        intro2; /ft. Chris Sawyer
+        intro2; //ft. Chris Sawyer
         //interview output
        /* Hello Mr Sawyer.  I am the receptionist.  
         This envelope has your job offer starting at 1 million annual.  Please start any time you like.
@@ -60,9 +57,9 @@ int main(int argc, char* argv[]){
 
     }
 
-    noble = royal();
+    noble = royal(ident);
 
-
+    //Floating point 88000.88 is returned to front desk whenever CS major completes interview and answers the questions about the Ohms correctly
 
     return 0;
 }
