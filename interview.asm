@@ -60,23 +60,23 @@ push qword -1
 
 
     
-    pop rax
-    movsd xmm0,xmm15
-    popf                                                 
-    pop rbx                                                     
-    pop r15                                                     
-    pop r14                                                      
-    pop r13                                                      
-    pop r12                                                      
-    pop r11                                                     
-    pop r10                                                     
-    pop r9                                                      
-    pop r8                                                      
-    pop rcx                                                     
-    pop rdx                                                     
-    pop rsi                                                     
-    pop rdi                                                     
-    pop rbp
+ pop rax
+ movsd xmm0,xmm15 ;Sends result to the main.cpp 
+ popf                                                 
+ pop rbx                                                     
+ pop r15                                                     
+ pop r14                                                      
+ pop r13                                                      
+ pop r12                                                      
+ pop r11                                                     
+ pop r10                                                     
+ pop r9                                                      
+ pop r8                                                      
+ pop rcx                                                     
+ pop rdx                                                     
+ pop rsi                                                     
+ pop rdi                                                     
+ pop rbp
 
 
    

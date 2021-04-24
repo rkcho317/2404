@@ -15,6 +15,7 @@ int main(int argc, char* argv[]){
     std::cout<<"Welcome to Software Analysis by Paramount Programmers, Inc. Please enter your first and last names and press enter: "<<std::endl;
     std::cin >> ident;
     std::cout<< ident <<std::endl; 
+    //send ident (name) to the asm
 
     std::cout<< "Thank you "<<std::endl;
 
@@ -23,6 +24,7 @@ int main(int argc, char* argv[]){
     std::cout<<"Please enter your expected annual salary when employed at Paramount: " <<std::endl;
     std::cin>> sal;
     std::cout<<sal<<std::endl;
+    //send sal (salary) to the asm
 
     std::cout<< "Your interview with Ms Linda Fenster, Personnel Manager, will begin shortly."<<std::endl;
 
@@ -43,7 +45,7 @@ int main(int argc, char* argv[]){
       } 
 
         else if (noble == 1200.12) { //If the philosophy major applies for the job then Ms Fenster sends 1200.12 to the front desk in a private envelope.
-        
+
         std::cout<<"Hello " << ident << " .I am the receptionist"<<std::endl;
         std::cout<<"We have an opening for you in the company cafeteria for $1200.12 annually.\nTake your time to let us know your decision.\nBye"<<std::endl;
 
