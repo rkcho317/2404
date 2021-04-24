@@ -13,19 +13,19 @@ global interview
 info db "Hello %s.   I am Ms Fenster. The interview will begin now.",10,0
 salary db "Wow! %i That's a lot of cash. Who do you think you are, Chris Sawyer (y or n)?", 10,0
 elec1 db "Alright.  Now we will work on your electricity.", 10,0
-elec2 db "Please enter the resistance of circuit #1 in ohms: ", 10,0
-res1 db "What is the resistance of circuit #2 in ohms: ", 10,0
-res2 db "The total resistance is %i Ohms.", 10,0 
+res1 db "Please enter the resistance of circuit #1 in ohms: ", 10,0
+res2 db "What is the resistance of circuit #2 in ohms: ", 10,0
+res3 db "The total resistance is %i Ohms.", 10,0 
 compy db "Were you a computer science major (y or n)? ",10, 0
 thanks db "Thank you. Please follow the exit signs to the front desk.", 10,0
 
-chrisq db %c, 10, 0
+chrisq %c, 0  ;answer to the question if you are Chris Sawyer
 
-eans1 double
-eans2 double
-eans3 double
+resans1 %lf,0 ;answer to res1
+resans2 %lf,0 ;answer to res2
+resans3 %lf,0 ;answer to res3
 
-compyq char
+compyq %c,0 ;answer to computer science major question
 
 .segment text
 control:

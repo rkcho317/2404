@@ -33,18 +33,15 @@ int main(int argc, char* argv[]){
       }
 
       else if ( ident == "Chris Sawyer"){
-
-      } 
-        
-        //interview output
+          //interview output
        /* Hello Mr Sawyer.  I am the receptionist.  
         This envelope has your job offer starting at 1 million annual.  Please start any time you like.
         Bye
         */
 
-        break;
+      } 
 
-        case 3: //social major
+        else if (ident == "Social Major") {
         intro;
         intro2;
         //interview output
@@ -53,13 +50,16 @@ int main(int argc, char* argv[]){
         Bye
         */
 
-        break;
+        } 
+        
+      else{
+        return 0;
+      }
 
-    }
 
     noble = royal(ident);
 
     //Floating point 88000.88 is returned to front desk whenever CS major completes interview and answers the questions about the Ohms correctly
 
-    return 0;
+
 }
