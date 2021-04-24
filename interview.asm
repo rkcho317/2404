@@ -6,10 +6,11 @@ name_size equ 100
 
 global interview
 
-.segment data
+segment .data
 
 info db "Hello %s. I am Ms Fenster. The interview will begin now.",10,0
-salary db "Wow! %5.3lf That's a lot of cash. Who do you think you are, Chris Sawyer (y or n)?: %c", 10,0
+salary db "Wow! %5.3lf That's a lot of cash.", 10,0
+who db "Who do you think you are, Chris Sawyer (y or n)?: %c", 10,0
 elec1 db "Alright.  Now we will work on your electricity.", 10,0
 res1 db "Please enter the resistance of circuit #1 in ohms: %5.3lf", 10,0
 res2 db "What is the resistance of circuit #2 in ohms: %5.3lf", 10,0
@@ -17,20 +18,21 @@ res3 db "The total resistance is %5.3lf Ohms.", 10,0
 compy db "Were you a computer science major (y or n)?: %c ",10, 0
 thanks db "Thank you. Please follow the exit signs to the front desk.", 10,0
 
-chrisq %c, 0  ;answer to the question if you are Chris Sawyer
+;name db "%s", 0
+;salry db "%lf", 0
 
-resans1 %lf,0 ;answer to res1
-resans2 %lf,0 ;answer to res2
-resans3 %lf,0 ;answer to res3
+chrisq db "%c", 0  ;answer to the question if you are Chris Sawyer
 
-compyq %c,0 ;answer to computer science major question
+resans1 db "%lf",0 ;answer to res1
+resans2 db "%lf",0 ;answer to res2
+resans3 db "%lf",0 ;answer to res3
 
-.segment css
+compyq db "%c",0 ;answer to computer science major question
 
-name %s, 0
-salry %lf, 0
+segment .bss
 
-.segment text
+
+segment .text
 interview:
 
 ;Backup registers
@@ -58,27 +60,49 @@ push qword 0
  mov r15, rdi ;string Name
  movsd xmm15, xmm0 ;double Salary
 
-;Print info1 with name
+;Print "who are you?" with name
 push qword 0
 mov qword rax,0
-mov qword rdi, info1
+mov qword rdi, info
 mov qword rsi, r15
 call printf
 pop rax
 
-;Print info2
+;Print "wow that's a lot of cash!" with salary
 push qword 0
-push rax, 0
-mov rdi, info2
-movsd rsi, xmm15
+mov qword rax, 0
+mov rdi, salary
+mov rsi, rsp
 call printf 
+movsd xmm15, [rsp]
 pop rax
 
-;
+
+;Print "Are you Chris Sawyer?" 
+push qword 0
+mov qword rax, 0
+mov rdi, who
+call printf
+pop rax
+
+;Answer the Chris Sawyer Question
+push qword 0
+mov rax,0
+mov rdi, chrisq
+mov rdi, rsp
+call scanf 
+
+;If yes to Chris Sawyer
+cmp rsp, 
+movsd xmm15, xmm0
+jmp final 
+
+;If no to Chris Sawyer
 
 ;===BEGIN ELECTRICITY TEST===
+electricity: 
 
-    
+final:    
  pop rax
  movsd xmm0,xmm15 ;Sends result to the main.cpp 
  popf                                                 

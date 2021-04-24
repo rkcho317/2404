@@ -3,26 +3,29 @@
 #include <stdint.h>
 #include <cstring>
 
-extern "C" double royal(string,double);
+extern "C" double royal(std::string,double);
 
 int main(int argc, char* argv[]){
 
     double noble=0.0;
-    char ident[100];
+    //char ident[100];
+    std::string ident;
     double sal;  
 
     //Introduction block
     std::cout<<"Welcome to Software Analysis by Paramount Programmers, Inc. Please enter your first and last names and press enter: "<<std::endl;
-    getline(cin, ident);
+    getline(std::cin, ident);
     std::cout<< "Thank you "<<ident<< "\nOur records show that you applied for employment her with our agency a week ago." <<std::endl;
 
     std::cout<<"Please enter your expected annual salary when employed at Paramount: " <<std::endl;
-    getline(cin, sal);
+    getline(std::cin, sal);
 
     std::cout<< "Your interview with Ms Linda Fenster, Personnel Manager, will begin shortly."<<std::endl;
 
     //Send the values of ident (name) and sal (salary) to interview.asm
     royal(ident,sal);
+
+    /*
 
     //BEGIN INTERVIEW.ASM 
     noble = royal();
@@ -51,6 +54,8 @@ int main(int argc, char* argv[]){
         return 0;
       }
   
+*/
 
+return 0;
     
 }
