@@ -51,14 +51,12 @@ pushf
 
 push qword -1
 
-work:
-
-    mov r15, rdi        ;safekeeping
-    ;Begin section to output the name passed into this function
-    mov rax, 0
-    mov rdi, info
-    mov rsi, r15
-    call printf
+  ;  mov r15, rdi        ;safekeeping
+                        ;Begin section to output the name passed into this function
+  ;  mov rax, 0
+  ;  mov rdi, info
+  ;  mov rsi, r15
+  ;  call printf
 
 
     

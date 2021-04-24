@@ -3,13 +3,15 @@
 #include <stdint.h>
 #include <cstring>
 
-extern "C" double royal(char[]);
+extern "C" double royal();
 
 int main(int argc, char* argv[]){
-    string noble=0.0;
+    
     char ident[100];
     double sal;
-    noble = royal;
+    
+    double noble=0.0;
+    noble = royal();
 
     //String Blocks
     //Introduction
@@ -23,22 +25,22 @@ int main(int argc, char* argv[]){
 
     std::cout<<"Please enter your expected annual salary when employed at Paramount: " <<std::endl;
     std::cin>> sal;
-    std::cout<<sal<<endl;
+    std::cout<<sal<<std::endl;
 
     std::cout<< "Your interview with Ms Linda Fenster, Personnel Manager, will begin shortly."<<std::endl;
 
     //BEGIN INTERVIEW.ASM 
 
-    if (noble =="CS Major"){
+    if (noble ==88000.88){
        
         //interview output
         //Floating point 88000.88 is returned to front desk whenever CS major completes interview and answers the questions about the Ohms correctly
   
         std::cout<<"Hello " << ident << " .I am the receptionist"<<std::endl;
-        std::cout<<"This envelope contains your job offer with starting salary" << /*what was returned from interview.asm*/ << "\nPlease check back on Monday morning at 8am.\nBye"<<std::endl;
+        std::cout<<"This envelope contains your job offer with starting salary 88000.88.\nPlease check back on Monday morning at 8am.\nBye"<<std::endl;
       }
 
-      else if ( noble == "Chris Sawyer"){
+      else if ( noble == 1000000.00){
           //interview output
           //If Chris applies for a job then Ms Fenster sends the code number 1 000 000.00 to the front desk.
 
@@ -47,7 +49,7 @@ int main(int argc, char* argv[]){
 
       } 
 
-        else if (noble == "Philosophy Major") {
+        else if (noble == 1200.12) {
 
         //interview output
         //If the philosophy major applies for the job then Ms Fenster sends 1200.12 to the front desk in a private envelope.
