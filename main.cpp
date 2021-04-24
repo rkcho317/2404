@@ -3,13 +3,12 @@
 #include <stdint.h>
 #include <cstring>
 
-extern "C" double royal(std::string,double);
+extern "C" double royal(char string,double sal);
 
 int main(int argc, char* argv[]){
 
-    double noble=0.0;
-    //char ident[100];
-    std::string ident;
+    //double noble=0.0;
+    char ident[100];
     double sal;  
 
     //Introduction block
