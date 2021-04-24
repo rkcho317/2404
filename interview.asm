@@ -8,8 +8,6 @@ global interview
 
 .segment data
 
-.segment css
-
 info db "Hello %s.   I am Ms Fenster. The interview will begin now.",10,0
 salary db "Wow! %i That's a lot of cash. Who do you think you are, Chris Sawyer (y or n)?", 10,0
 elec1 db "Alright.  Now we will work on your electricity.", 10,0
@@ -26,6 +24,11 @@ resans2 %lf,0 ;answer to res2
 resans3 %lf,0 ;answer to res3
 
 compyq %c,0 ;answer to computer science major question
+
+.segment css
+
+name %s, 0
+salry %lf, 0
 
 .segment text
 control:
