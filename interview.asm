@@ -93,11 +93,12 @@ mov rdi, rsp
 call scanf 
 
 ;If yes to Chris Sawyer
-cmp rsp, 
-movsd xmm15, xmm0
-jmp final 
+cmp rdi, 'y'
+movsd xmm15, 1000000.00 
+jmp final
 
 ;If no to Chris Sawyer
+cmp rdi, 'n'
 jmp major
 
 ;==Major Block
@@ -111,9 +112,12 @@ call printf
 pop rax
 
 ;If yes to Computer science major
+cmp rdi, 'y'
 jmp electricity
 
 ;If no to Computer Science major
+cmp rdi, 'n'
+movsd xmm15, 1200.12
 jmp final
 
 ;===BEGIN ELECTRICITY TEST===
