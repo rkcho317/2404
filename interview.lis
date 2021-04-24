@@ -1,0 +1,205 @@
+     1                                  
+     2                                  extern printf
+     3                                  extern scanf
+     4                                  
+     5                                  name_size equ 100
+     6                                  
+     7                                  global interview
+     8                                  
+     9                                  segment .data
+    10                                  
+    11 00000000 48656C6C6F2025732E-     info db "Hello %s. I am Ms Fenster. The interview will begin now.",10,0
+    11 00000009 204920616D204D7320-
+    11 00000012 46656E737465722E20-
+    11 0000001B 54686520696E746572-
+    11 00000024 766965772077696C6C-
+    11 0000002D 20626567696E206E6F-
+    11 00000036 772E0A00           
+    12 0000003A 576F77212025352E33-     salary db "Wow! %5.3lf That's a lot of cash.", 10,0
+    12 00000043 6C6620546861742773-
+    12 0000004C 2061206C6F74206F66-
+    12 00000055 20636173682E0A00   
+    13 0000005D 57686F20646F20796F-     who db "Who do you think you are, Chris Sawyer (y or n)?: %c", 10,0
+    13 00000066 75207468696E6B2079-
+    13 0000006F 6F75206172652C2043-
+    13 00000078 687269732053617779-
+    13 00000081 6572202879206F7220-
+    13 0000008A 6E293F3A2025630A00 
+    14 00000093 5765726520796F7520-     compy db "Were you a computer science major (y or n)?: %c ",10, 0
+    14 0000009C 6120636F6D70757465-
+    14 000000A5 7220736369656E6365-
+    14 000000AE 206D616A6F72202879-
+    14 000000B7 206F72206E293F3A20-
+    14 000000C0 2563200A00         
+    15 000000C5 416C72696768742E20-     elec1 db "Alright.  Now we will work on your electricity.", 10,0
+    15 000000CE 204E6F772077652077-
+    15 000000D7 696C6C20776F726B20-
+    15 000000E0 6F6E20796F75722065-
+    15 000000E9 6C6563747269636974-
+    15 000000F2 792E0A00           
+    16 000000F6 506C6561736520656E-     res1 db "Please enter the resistance of circuit #1 in ohms: %5.3lf", 10,0
+    16 000000FF 746572207468652072-
+    16 00000108 6573697374616E6365-
+    16 00000111 206F66206369726375-
+    16 0000011A 697420233120696E20-
+    16 00000123 6F686D733A2025352E-
+    16 0000012C 336C660A00         
+    17 00000131 576861742069732074-     res2 db "What is the resistance of circuit #2 in ohms: %5.3lf", 10,0
+    17 0000013A 686520726573697374-
+    17 00000143 616E6365206F662063-
+    17 0000014C 697263756974202332-
+    17 00000155 20696E206F686D733A-
+    17 0000015E 2025352E336C660A00 
+    18 00000167 54686520746F74616C-     res3 db "The total resistance is %5.3lf Ohms.", 10,0 
+    18 00000170 20726573697374616E-
+    18 00000179 63652069732025352E-
+    18 00000182 336C66204F686D732E-
+    18 0000018B 0A00               
+    19 0000018D 5468616E6B20796F75-     thanks db "Thank you. Please follow the exit signs to the front desk.", 10,0
+    19 00000196 2E20506C6561736520-
+    19 0000019F 666F6C6C6F77207468-
+    19 000001A8 652065786974207369-
+    19 000001B1 676E7320746F207468-
+    19 000001BA 652066726F6E742064-
+    19 000001C3 65736B2E0A00       
+    20                                  
+    21                                  ;name db "%s", 0
+    22                                  ;salry db "%lf", 0
+    23                                  
+    24 000001C9 256300                  chrisq db "%c", 0  ;answer to the question if you are Chris Sawyer
+    25                                  
+    26 000001CC 256C6600                resans1 db "%lf",0 ;answer to res1
+    27 000001D0 256C6600                resans2 db "%lf",0 ;answer to res2
+    28 000001D4 256C6600                resans3 db "%lf",0 ;answer to res3
+    29                                  
+    30 000001D8 256300                  compyq db "%c",0 ;answer to computer science major question
+    31                                  
+    32 000001DB 0000000080842E41        chrissal dq 1000000.00
+    33 000001E3 14AE47E17AC09240        socialsal dq 1200.12
+    34                                  
+    35                                  segment .bss
+    36                                  
+    37                                  
+    38                                  segment .text
+    39                                  interview:
+    40                                  
+    41                                  ;Backup registers
+    42                                  
+    43 00000000 55                      push rbp
+    44 00000001 4889E5                  mov rbp, rsp
+    45 00000004 57                      push rdi
+    46 00000005 56                      push rsi
+    47 00000006 52                      push rdx
+    48 00000007 51                      push rcx
+    49 00000008 4150                    push r8
+    50 0000000A 4151                    push r9
+    51 0000000C 4152                    push r10
+    52 0000000E 4153                    push r11
+    53 00000010 4154                    push r12
+    54 00000012 4155                    push r13
+    55 00000014 4156                    push r14
+    56 00000016 4157                    push r15
+    57 00000018 53                      push rbx
+    58 00000019 9C                      pushf
+    59                                  
+    60 0000001A 6A00                    push qword 0
+    61                                  
+    62                                   ;Move values from cpp to stack
+    63 0000001C 4989FF                   mov r15, rdi ;string Name
+    64 0000001F F2440F10F8               movsd xmm15, xmm0 ;double Salary
+    65                                  
+    66                                  ;Print "who are you?" with name
+    67 00000024 6A00                    push qword 0
+    68 00000026 B800000000              mov qword rax,0
+    69 0000002B 48BF-                   mov qword rdi, info
+    69 0000002D [0000000000000000] 
+    70 00000035 4C89FE                  mov qword rsi, r15
+    71 00000038 E8(00000000)            call printf
+    72 0000003D 58                      pop rax
+    73                                  
+    74                                  ;Print "wow that's a lot of cash!" with salary
+    75 0000003E 6A00                    push qword 0
+    76 00000040 B800000000              mov qword rax, 0
+    77 00000045 48BF-                   mov rdi, salary
+    77 00000047 [3A00000000000000] 
+    78 0000004F 4889E6                  mov rsi, rsp
+    79 00000052 E8(00000000)            call printf 
+    80 00000057 F2440F103C24            movsd xmm15, [rsp]
+    81 0000005D 58                      pop rax
+    82                                  
+    83                                  
+    84                                  ;Print "Are you Chris Sawyer?" 
+    85 0000005E 6A00                    push qword 0
+    86 00000060 B800000000              mov qword rax, 0
+    87 00000065 48BF-                   mov rdi, who
+    87 00000067 [5D00000000000000] 
+    88 0000006F E8(00000000)            call printf
+    89 00000074 58                      pop rax
+    90                                  
+    91                                  ;Answer the Chris Sawyer Question
+    92 00000075 6A00                    push qword 0
+    93 00000077 B800000000              mov rax,0
+    94 0000007C 48BF-                   mov rdi, chrisq
+    94 0000007E [C901000000000000] 
+    95 00000086 4889E7                  mov rdi, rsp
+    96 00000089 E8(00000000)            call scanf 
+    97                                  
+    98                                  ;If yes to Chris Sawyer
+    99 0000008E 4883FF79                cmp rdi, 'y'
+   100 00000092 F20F100425-             movsd xmm0, [chrissal]
+   100 00000097 [DB010000]         
+   101 0000009B F2440F10F8              movsd xmm15, xmm0
+   102 000000A0 EB37                    jmp final
+   103                                  
+   104                                  ;If no to Chris Sawyer
+   105 000000A2 4883FF6E                cmp rdi, 'n'
+   106 000000A6 EB00                    jmp major
+   107                                  
+   108                                  ;==Major Block
+   109                                  
+   110                                  major:
+   111                                  ;Print Computer Science Major Question
+   112 000000A8 6A00                    push qword 0
+   113 000000AA B800000000              mov qword rax, 0
+   114 000000AF 48BF-                   mov rdi, compy
+   114 000000B1 [9300000000000000] 
+   115 000000B9 E8(00000000)            call printf
+   116 000000BE 58                      pop rax
+   117                                  
+   118                                  ;If yes to Computer science major
+   119 000000BF 4883FF79                cmp rdi, 'y'
+   120 000000C3 EB14                    jmp electricity
+   121                                  
+   122                                  ;If no to Computer Science major
+   123 000000C5 4883FF6E                cmp rdi, 'n'
+   124 000000C9 F20F100425-             movsd xmm0, [socialsal]
+   124 000000CE [E3010000]         
+   125 000000D2 F2440F10F8              movsd xmm15, xmm0
+   126 000000D7 EB00                    jmp final
+   127                                  
+   128                                  ;===BEGIN ELECTRICITY TEST===
+   129                                  electricity: 
+   130                                  
+   131                                  final:    
+   132 000000D9 58                       pop rax
+   133 000000DA F2410F10C7               movsd xmm0,xmm15 ;Sends result to the main.cpp 
+   134 000000DF 9D                       popf                                                 
+   135 000000E0 5B                       pop rbx                                                     
+   136 000000E1 415F                     pop r15                                                     
+   137 000000E3 415E                     pop r14                                                      
+   138 000000E5 415D                     pop r13                                                      
+   139 000000E7 415C                     pop r12                                                      
+   140 000000E9 415B                     pop r11                                                     
+   141 000000EB 415A                     pop r10                                                     
+   142 000000ED 4159                     pop r9                                                      
+   143 000000EF 4158                     pop r8                                                      
+   144 000000F1 59                       pop rcx                                                     
+   145 000000F2 5A                       pop rdx                                                     
+   146 000000F3 5E                       pop rsi                                                     
+   147 000000F4 5F                       pop rdi                                                     
+   148 000000F5 5D                       pop rbp
+   149                                  
+   150                                  
+   151                                     
+   152 000000F6 C3                      ret
+   153                                  

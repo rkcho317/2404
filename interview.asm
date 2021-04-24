@@ -29,6 +29,9 @@ resans3 db "%lf",0 ;answer to res3
 
 compyq db "%c",0 ;answer to computer science major question
 
+chrissal dq 1000000.00
+socialsal dq 1200.12
+
 segment .bss
 
 
@@ -94,7 +97,8 @@ call scanf
 
 ;If yes to Chris Sawyer
 cmp rdi, 'y'
-movsd xmm15, 1000000.00 
+movsd xmm0, [chrissal]
+movsd xmm15, xmm0
 jmp final
 
 ;If no to Chris Sawyer
@@ -117,7 +121,8 @@ jmp electricity
 
 ;If no to Computer Science major
 cmp rdi, 'n'
-movsd xmm15, 1200.12
+movsd xmm0, [socialsal]
+movsd xmm15, xmm0
 jmp final
 
 ;===BEGIN ELECTRICITY TEST===
