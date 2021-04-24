@@ -11,20 +11,19 @@ int main(int argc, char* argv[]){
 
     //String Blocks
     //Introduction
-    std::string intro = printf("\nWelcome to Software Analysis by Paramount Programmers, Inc.\nPlease enter your first and last names and press enter: ");
+    std::string intro =  "Welcome to Software Analysis by Paramount Programmers, Inc. Please enter your first and last names and press enter: ";
     
     std::cin >> ident;
-    double corax;
 
-    std::cout<< corax <<std::endl; //what is name?
+    std::cout<< ident <<std::endl; //what is name?
 
-    std::string intro2 = printf("\nThank you Joey Brown.  Our records show that you applied for employment her with our agency a week ago. \nPlease enter your expected annual salary when employed at Paramount: %int. \nYour interview with Ms Linda Fenster, Personnel Manager, will begin shortly.");
+    std::string thankyou1 = "Thank you";
+    std::string thankyou2 = " Our records show that you applied for employment her with our agency a week ago." ;
+    std::string thankyou3 = "Please enter your expected annual salary when employed at Paramount: " ;
+    std::string thankyou4 = "Your interview with Ms Linda Fenster, Personnel Manager, will begin shortly.";
 
-    //switch case
-    switch (corax){
-        case "CS Major": //CS Major
-        intro;
-        intro2;
+    if (ident =="CS Major"){
+        printf("%s\n",thankyou1,);
         //interview output
        /* Hello Joey Brown I am the receptionist.  
         This envelope contains your job offer with starting salary 50000.00.  Please check back on Monday morning at 8am.
