@@ -11,11 +11,11 @@ segment .data
 info db "Hello %s. I am Ms Fenster. The interview will begin now.",10,0
 salary db "Wow! %5.3lf That's a lot of cash.", 10,0
 who db "Who do you think you are, Chris Sawyer (y or n)?: %c", 10,0
+compy db "Were you a computer science major (y or n)?: %c ",10, 0
 elec1 db "Alright.  Now we will work on your electricity.", 10,0
 res1 db "Please enter the resistance of circuit #1 in ohms: %5.3lf", 10,0
 res2 db "What is the resistance of circuit #2 in ohms: %5.3lf", 10,0
 res3 db "The total resistance is %5.3lf Ohms.", 10,0 
-compy db "Were you a computer science major (y or n)?: %c ",10, 0
 thanks db "Thank you. Please follow the exit signs to the front desk.", 10,0
 
 ;name db "%s", 0
@@ -98,6 +98,23 @@ movsd xmm15, xmm0
 jmp final 
 
 ;If no to Chris Sawyer
+jmp major
+
+;==Major Block
+
+major:
+;Print Computer Science Major Question
+push qword 0
+mov qword rax, 0
+mov rdi, compy
+call printf
+pop rax
+
+;If yes to Computer science major
+jmp electricity
+
+;If no to Computer Science major
+jmp final
 
 ;===BEGIN ELECTRICITY TEST===
 electricity: 
