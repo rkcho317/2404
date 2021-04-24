@@ -61,7 +61,7 @@ work:
     call printf
 
 
-    ;;;;16 pops
+    
     pop rax
     movsd xmm0,xmm15
     popf                                                 
