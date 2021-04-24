@@ -1,5 +1,8 @@
+
 extern printf
 extern scanf
+
+name_size equ 100
 
 global interview
 
@@ -15,6 +18,14 @@ res1 db "What is the resistance of circuit #2 in ohms: ", 10,0
 res2 db "The total resistance is %i Ohms.", 10,0 
 compy db "Were you a computer science major (y or n)? ",10, 0
 thanks db "Thank you. Please follow the exit signs to the front desk.", 10,0
+
+chrisq db %c, 10, 0
+
+eans1 double
+eans2 double
+eans3 double
+
+compyq char
 
 .segment text
 control:
