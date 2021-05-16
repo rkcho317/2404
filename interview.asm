@@ -1,4 +1,64 @@
+;***************************************************************************************************************************
+;Program name: "King of Assembly".  This program demonstrates how to pass user inputs to generate different messages                        *
+;to an X86 function, and into a C++ main function.   Copyright (C) 2021 Rosa Cho                                                                             *
+;This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License  *
+;version 3 as published by the Free Software Foundation.                                                                    *
+;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied         *
+;warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.     *
+;A copy of the GNU General Public License v3 is available here:  <https://www.gnu.org/licenses/>.                           *
+;****************************************************************************************************************************
 
+
+
+;========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1=========2=========3=========4=========5=========6=========7**
+
+;Author information
+;  Author name: Rosa Cho
+;  Author email: rkcho317@fullerton.edu
+;
+;Program information
+;  Program name: King of Assembly 
+;  Programming languages: Main function in C++; arithmetic, float input/output functions in X86-64
+;  Date program initiated: 2021-Apr-10
+;  Date last updated: 2021-May-16
+;  Files in the program: main.cpp, interview.asm, run.sh
+;
+;Purpose
+;
+;
+;This file
+;  File name: interview.asm
+;  Language: X86-64
+;  Syntax: Intel
+;  Assemble: nasm -f elf64 -l interview.lis -o interview.o interview.asm
+;
+;========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1=========2=========3=========4=========5=========6=========7**
+;
+;Author information
+;  Author name: Rosa Cho
+;  Author email: rkcho317@fullerton.edu
+;
+;Program information
+;  Program name: interview.asm
+;  Programming languages: X86 with one module in C++
+;  Date program began: 2021-Apr-10
+;  Date of last update: 2021-May-16
+;
+;Purpose
+;  The intent of this program is to show some of the basic tools or techniques for working with user inputs of strings, chars, floats.
+;
+;Project information
+;  Project files: main.cpp, interview.asm, run.sh
+;  Status: Available for public review.
+;
+;Translator information
+;  Linux: nasm -f elf64 -l interview.lis -o interview.o interview.asm
+;
+;
+;
+;
+;========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1=========2=========3=========4=========5=========6=========7**
+;
 extern printf
 extern scanf
 
@@ -17,11 +77,6 @@ res1 db "Please enter the resistance of circuit #1 in ohms: %5.3lf", 10,0
 res2 db "What is the resistance of circuit #2 in ohms: %5.3lf", 10,0
 res3 db "The total resistance is %5.3lf Ohms.", 10,0 
 thanks db "Thank you. Please follow the exit signs to the front desk.", 10,0
-
-;name db "%s", 0
-;salry db "%lf", 0
-
-chrisq db "%c", 0  ;answer to the question if you are Chris Sawyer
 
 resans1 db "%lf",0 ;answer to res1
 resans2 db "%lf",0 ;answer to res2
@@ -105,8 +160,49 @@ jmp final
 cmp rdi, 'n'
 jmp major
 
-;==Major Block
+;===BEGIN ELECTRICITY TEST===
+electricity: 
 
+;Print Message that begins the Electricity Test
+push qword 0
+mov qword rax,0
+mov rdi, elec1
+call printf 
+pop rax
+
+;Print Question 1
+push qword 0
+mov qword rax, 0 
+mov rdi, res1
+call printf 
+pop rax
+
+;Accept Answer for Q1
+push qword 0
+mov rax, 0
+mov rdi, resans1
+mov rdi, xmm0 
+call scanf
+
+;Print Question 2
+push qword 0
+mov qword rax, 0 
+mov rdi, res2
+call printf 
+pop rax
+
+;Accept Answer for Q2
+mov rax,1 
+mov rdi, 
+push qword 0
+mov rsi, rsp
+call scanf
+movsd xmm11, [rsp]
+pop rax
+
+;Show Total Resistance
+
+;== Are you a Computer Science Major Block ==
 major:
 ;Print Computer Science Major Question
 push qword 0
@@ -117,7 +213,7 @@ pop rax
 
 ;If yes to Computer science major
 cmp rdi, 'y'
-jmp electricity
+jmp final
 
 ;If no to Computer Science major
 cmp rdi, 'n'
@@ -125,12 +221,19 @@ movsd xmm0, [socialsal]
 movsd xmm15, xmm0
 jmp final
 
-;===BEGIN ELECTRICITY TEST===
-electricity: 
 
-final:    
+
+; == FINAL prints a final message and sends a code to the main.cpp == 
+final: 
+
+;Thank you message
+push qword 0
+mov qword rax,0
+mov rdi, thanks
+call printf
+
  pop rax
- movsd xmm0,xmm15 ;Sends result to the main.cpp 
+ movsd xmm0,xmm15 ;Sends a code to the main.cpp 
  popf                                                 
  pop rbx                                                     
  pop r15                                                     
