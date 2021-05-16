@@ -18,8 +18,8 @@
 ;
 ;Program information
 ;  Program name: King of Assembly 
-;  Programming languages: Main function in C++; arithmetic, float input/output functions in X86-64
-;  Date program initiated: 2021-Apr-10
+;  Programming languages: Main function in C++; string and char input/output functions in X86-64
+;  Date program initiated: 2021-Apr-12
 ;  Date last updated: 2021-May-16
 ;  Files in the program: main.cpp, interview.asm, run.sh
 ;
@@ -41,11 +41,11 @@
 ;Program information
 ;  Program name: interview.asm
 ;  Programming languages: X86 with one module in C++
-;  Date program began: 2021-Apr-10
+;  Date program began: 2021-Apr-12
 ;  Date of last update: 2021-May-16
 ;
 ;Purpose
-;  The intent of this program is to show some of the basic tools or techniques for working with user inputs of strings, chars, floats.
+;  The intent of this program is to show some of the basic tools or techniques for working with user inputs of strings (with embedded white space) and chars then output the results to a txt file.
 ;
 ;Project information
 ;  Project files: main.cpp, interview.asm, run.sh
