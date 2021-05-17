@@ -44,7 +44,7 @@ This file
 #include <string>
 
 extern "C" void interview(char ident[], double sal);
-
+extern "C" double interview();
 
 int main(){
 
@@ -65,7 +65,7 @@ int main(){
     printf("%s\n", "Your interview with Ms Linda Fenster, Personnel Manager, will begin shortly.");
 
     //Send Name and Salary to interview.asm
-     interview(ident,sal);
+     noble = interview();
    
 
     //After the Interview
