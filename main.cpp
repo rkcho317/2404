@@ -43,11 +43,12 @@ This file
 #include <stdint.h>
 #include <string>
 
-extern "C" double royal(char ident[100],double sal);
+extern "C" void interview(char ident[], double sal);
 
-int main(int argc, char* argv[]){
 
-    //double noble=0.0;
+int main(){
+
+    double noble=0.0;
     char ident[100];
     double sal;  
 
@@ -58,22 +59,22 @@ int main(int argc, char* argv[]){
     std::cout<< "Thank you "<<ident<< "\nOur records show that you applied for employment her with our agency a week ago." <<std::endl;
 
     printf("%s\n", "Please enter your expected annual salary when employed at Paramount: ");
+    //scanf("%lf", &sal);
     std::cin>>sal;
 
     printf("%s\n", "Your interview with Ms Linda Fenster, Personnel Manager, will begin shortly.");
 
-    //Send the values of ident (name) and sal (salary) to interview.asm
-    royal(ident,sal);
+    //Send Name and Salary to interview.asm
+     interview(ident,sal);
+   
 
-    /*
-
-    //BEGIN INTERVIEW.ASM 
-    noble = royal();
+    //After the Interview
 
     if (noble ==88000.88){  //Floating point 88000.88 is returned to front desk whenever CS major completes interview and answers the questions about the Ohms correctly
   
         std::cout<<"Hello " << ident << " .I am the receptionist"<<std::endl;
         std::cout<<"This envelope contains your job offer with starting salary 88000.88.\nPlease check back on Monday morning at 8am.\nBye"<<std::endl;
+              
       }
 
       else if ( noble == 1000000.00){ //If Chris applies for a job then Ms Fenster sends the code number 1 000 000.00 to the front desk.
@@ -94,7 +95,7 @@ int main(int argc, char* argv[]){
         return 0;
       }
   
-*/
+
 
 return 0;
     

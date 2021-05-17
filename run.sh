@@ -18,4 +18,7 @@ g++ -m64 -std=c++14 -fno-pie -no-pie -g -o interview.out main.o interview.o
 echo "Run the program King of Assembly"
 ./interview.out
 
+#echo "Print the results of the Questions and Answers"
+#./interview.out < results.txt
+
 echo "This Bash script file will now terminate.  Bye."

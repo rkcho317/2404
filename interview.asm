@@ -61,6 +61,7 @@
 ;
 extern printf
 extern scanf
+extern main
 
 name_size equ 100
 
@@ -69,7 +70,7 @@ global interview
 segment .data
 
 info db "Hello %s. I am Ms Fenster. The interview will begin now.",10,0
-salary db "Wow! %5.3lf That's a lot of cash.", 10,0
+salary db "Wow! %5.2lf That's a lot of cash.", 10,0
 who db "Who do you think you are, Chris Sawyer (y or n)?: %c", 10,0
 compy db "Were you a computer science major (y or n)?: %c ",10, 0
 elec1 db "Alright.  Now we will work on your electricity.", 10,0
@@ -80,13 +81,14 @@ thanks db "Thank you. Please follow the exit signs to the front desk.", 10,0
 
 resans1 db "%lf",0 ;answer to res1
 resans2 db "%lf",0 ;answer to res2
-resans3 db "%lf",0 ;answer to res3
 
 compyq db "%c",0 ;answer to computer science major question
 chrisq db "%c",0 ;answer to the are you chris sawyer question
 
+compscisal dq 88000.88
 chrissal dq 1000000.00
 socialsal dq 1200.12
+one1 dq 1.0
 
 segment .bss
 
@@ -113,13 +115,13 @@ push r15
 push rbx
 pushf
 
-push qword 0
+push qword -1
 
  ;Move values from cpp to stack
  mov r15, rdi ;string Name
  movsd xmm15, xmm0 ;double Salary
 
-;Print "who are you?" with name
+;Print "Hello __ I am Ms Fenster. The Interview will begin" message
 push qword 0
 mov qword rax,0
 mov qword rdi, info
@@ -130,114 +132,133 @@ pop rax
 
 ;Print "wow that's a lot of cash!" with salary
 push qword 0
-mov qword rax, 0
+mov rax, 1
 mov rdi, salary
-mov rsi, rsp
+movsd xmm0, xmm15
 call printf 
-movsd xmm15, [rsp]
 pop rax
-
 
 ;Print "Are you Chris Sawyer?" 
-push qword 0
-mov qword rax, 0
-mov rdi, who
-call printf
-pop rax
+;push qword 0
+;mov qword rax, 0
+;mov rdi, who
+;call printf
+;pop rax
 
 ;Answer the Chris Sawyer Question
-push qword 0
-mov rax,0
-mov rdi, chrisq
-mov rdi, rsp
-call scanf 
+;push qword 0
+;mov rax,0
+;mov rdi, chrisq
+;mov rdi, rsp
+;call scanf 
 
 ;If yes to Chris Sawyer
-cmp rdi, 'y'
-movsd xmm0, [chrissal]
-movsd xmm15, xmm0
-jmp final
+;cmp rdi, 'y'
+;movsd xmm0, [chrissal]
+;movsd xmm15, xmm0
+;jmp final
 
 ;If no to Chris Sawyer
-cmp rdi, 'n'
-jmp major
+;cmp rdi, 'n'
+;jmp major
 
 ;===BEGIN ELECTRICITY TEST===
-electricity: 
+;electricity: 
 
 ;Print Message that begins the Electricity Test
-push qword 0
-mov qword rax,0
-mov rdi, elec1
-call printf 
-pop rax
+;push qword 0
+;mov qword rax,0
+;mov rdi, elec1
+;call printf 
+;pop rax
 
 ;Print Question 1
-push qword 0
-mov qword rax, 0 
-mov rdi, res1
-call printf 
-pop rax
+;push qword 0
+;mov qword rax, 0 
+;mov rdi, res1
+;call printf 
+;pop rax
 
 ;Accept Answer for Q1
-mov rax,1 
-mov rdi, rsp
-push qword 0
-mov rsi, rsp
-call scanf
-movsd xmm10, [rsp]
-pop rax
+;mov rax,1 
+;mov rdi, rsp
+;push qword 0
+;mov rsi, rsp
+;call scanf
+;movsd xmm10, [rsp]
+;pop rax
 
 ;Print Question 2
-push qword 0
-mov qword rax, 0 
-mov rdi, [res2]
-call printf 
-pop rax
+;push qword 0
+;mov qword rax, 0 
+;mov rdi, [res2]
+;call printf 
+;pop rax
 
 ;Accept Answer for Q2
-mov rax,1 
-mov rdi, rsp
-push qword 0
-mov rsi, rsp
-call scanf
-movsd xmm11, [rsp]
-pop rax
+;mov rax,1 
+;mov rdi, rsp
+;push qword 0
+;mov rsi, rsp
+;call scanf
+;movsd xmm11, [rsp]
+;pop rax
 
-;Show Total Resistance
+;Calculate Total Resistance
+;mov rax, 0
+;movsd xmm12, xmm10
+;movsd xmm1, [one1]
+;divsd xmm1, xmm12 ;1/resans1 
+;movsd xmm12, xmm1
+;movsd xmm2,[one1]
+;movsd xmm13, xmm11
+;divsd xmm2, xmm13 ;1/resans2
+;movsd xmm13, xmm2
+;addsd xmm13,xmm12
+;movsd xmm3,[one1]
+;divsd xmm3, xmm13 ; 1/(1/r1 + 1/r2) = total resistance
+;movsd xmm13, xmm3
+
+;Print Total Resistance 
+;push qword 0
+;mov qword rax,0
+;mov rdi, res3
+;movsd xmm0, xmm13
+;call printf
+;pop rax
 
 ;== Are you a Computer Science Major Block ==
-major:
+;major:
 ;Print Computer Science Major Question
-push qword 0
-mov qword rax, 0
-mov rdi, compy
-call printf
-pop rax
+;push qword 0
+;mov qword rax, 0
+;mov rdi, compy
+;call printf
+;pop rax
 
 ;If yes to Computer science major
-cmp rdi, 'y'
-jmp final
+;cmp rdi, 'y'
+;jmp final
 
 ;If no to Computer Science major
-cmp rdi, 'n'
-movsd xmm0, [socialsal]
-movsd xmm15, xmm0
-jmp final
+;cmp rdi, 'n'
+;movsd xmm0, [socialsal]
+;movsd xmm15, xmm0
+;jmp final
 
 
 
 ; == FINAL prints a final message and sends a code to the main.cpp == 
-final: 
+;final: 
 
 ;Thank you message
-push qword 0
-mov qword rax,0
-mov rdi, thanks
-call printf
+;push qword 0
+;mov qword rax,0
+;mov rdi, thanks
+;call printf
 
  pop rax
- movsd xmm0,xmm15 ;Sends a code to the main.cpp 
+ ;movsd xmm0,xmm15 ;Sends a code to the main.cpp 
  popf                                                 
  pop rbx                                                     
  pop r15                                                     
