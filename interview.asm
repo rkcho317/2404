@@ -83,6 +83,7 @@ resans2 db "%lf",0 ;answer to res2
 resans3 db "%lf",0 ;answer to res3
 
 compyq db "%c",0 ;answer to computer science major question
+chrisq db "%c",0 ;answer to the are you chris sawyer question
 
 chrissal dq 1000000.00
 socialsal dq 1200.12
@@ -125,6 +126,7 @@ mov qword rdi, info
 mov qword rsi, r15
 call printf
 pop rax
+
 
 ;Print "wow that's a lot of cash!" with salary
 push qword 0
@@ -178,22 +180,24 @@ call printf
 pop rax
 
 ;Accept Answer for Q1
+mov rax,1 
+mov rdi, rsp
 push qword 0
-mov rax, 0
-mov rdi, resans1
-mov rdi, xmm0 
+mov rsi, rsp
 call scanf
+movsd xmm10, [rsp]
+pop rax
 
 ;Print Question 2
 push qword 0
 mov qword rax, 0 
-mov rdi, res2
+mov rdi, [res2]
 call printf 
 pop rax
 
 ;Accept Answer for Q2
 mov rax,1 
-mov rdi, 
+mov rdi, rsp
 push qword 0
 mov rsi, rsp
 call scanf

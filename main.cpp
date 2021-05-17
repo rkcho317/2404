@@ -37,12 +37,13 @@ This file
   Execution: ./interview.out
 ========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1=========2=========3=========4=========5=========6=========7**
 */
+
 #include <iostream>
 #include <stdio.h>
 #include <stdint.h>
-#include <cstring>
+#include <string>
 
-extern "C" double royal(char string,double sal);
+extern "C" double royal(char ident[100],double sal);
 
 int main(int argc, char* argv[]){
 
@@ -51,14 +52,15 @@ int main(int argc, char* argv[]){
     double sal;  
 
     //Introduction block
-    std::cout<<"Welcome to Software Analysis by Paramount Programmers, Inc. Please enter your first and last names and press enter: "<<std::endl;
-    getline(std::cin, ident);
+    printf("%s\n", "Welcome to Software Analysis by Paramount Programmers, Inc. Please enter your first and last names and press enter: ");
+    std::cin.getline(ident,100);
+
     std::cout<< "Thank you "<<ident<< "\nOur records show that you applied for employment her with our agency a week ago." <<std::endl;
 
-    std::cout<<"Please enter your expected annual salary when employed at Paramount: " <<std::endl;
-    getline(std::cin, sal);
+    printf("%s\n", "Please enter your expected annual salary when employed at Paramount: ");
+    std::cin>>sal;
 
-    std::cout<< "Your interview with Ms Linda Fenster, Personnel Manager, will begin shortly."<<std::endl;
+    printf("%s\n", "Your interview with Ms Linda Fenster, Personnel Manager, will begin shortly.");
 
     //Send the values of ident (name) and sal (salary) to interview.asm
     royal(ident,sal);

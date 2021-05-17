@@ -1,250 +1,315 @@
-     1                                  
-     2                                  extern printf
-     3                                  extern scanf
-     4                                  
-     5                                  name_size equ 100
-     6                                  
-     7                                  global interview
-     8                                  
-     9                                  segment .data
+     1                                  ;***************************************************************************************************************************
+     2                                  ;Program name: "King of Assembly".  This program demonstrates how to pass user inputs to generate different messages                        *
+     3                                  ;to an X86 function, and into a C++ main function.   Copyright (C) 2021 Rosa Cho                                                                             *
+     4                                  ;This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License  *
+     5                                  ;version 3 as published by the Free Software Foundation.                                                                    *
+     6                                  ;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied         *
+     7                                  ;warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.     *
+     8                                  ;A copy of the GNU General Public License v3 is available here:  <https://www.gnu.org/licenses/>.                           *
+     9                                  ;****************************************************************************************************************************
     10                                  
-    11 00000000 48656C6C6F2025732E-     info db "Hello %s. I am Ms Fenster. The interview will begin now.",10,0
-    11 00000009 204920616D204D7320-
-    11 00000012 46656E737465722E20-
-    11 0000001B 54686520696E746572-
-    11 00000024 766965772077696C6C-
-    11 0000002D 20626567696E206E6F-
-    11 00000036 772E0A00           
-    12 0000003A 576F77212025352E33-     salary db "Wow! %5.3lf That's a lot of cash.", 10,0
-    12 00000043 6C6620546861742773-
-    12 0000004C 2061206C6F74206F66-
-    12 00000055 20636173682E0A00   
-    13 0000005D 57686F20646F20796F-     who db "Who do you think you are, Chris Sawyer (y or n)?: %c", 10,0
-    13 00000066 75207468696E6B2079-
-    13 0000006F 6F75206172652C2043-
-    13 00000078 687269732053617779-
-    13 00000081 6572202879206F7220-
-    13 0000008A 6E293F3A2025630A00 
-    14 00000093 5765726520796F7520-     compy db "Were you a computer science major (y or n)?: %c ",10, 0
-    14 0000009C 6120636F6D70757465-
-    14 000000A5 7220736369656E6365-
-    14 000000AE 206D616A6F72202879-
-    14 000000B7 206F72206E293F3A20-
-    14 000000C0 2563200A00         
-    15 000000C5 416C72696768742E20-     elec1 db "Alright.  Now we will work on your electricity.", 10,0
-    15 000000CE 204E6F772077652077-
-    15 000000D7 696C6C20776F726B20-
-    15 000000E0 6F6E20796F75722065-
-    15 000000E9 6C6563747269636974-
-    15 000000F2 792E0A00           
-    16 000000F6 506C6561736520656E-     res1 db "Please enter the resistance of circuit #1 in ohms: %5.3lf", 10,0
-    16 000000FF 746572207468652072-
-    16 00000108 6573697374616E6365-
-    16 00000111 206F66206369726375-
-    16 0000011A 697420233120696E20-
-    16 00000123 6F686D733A2025352E-
-    16 0000012C 336C660A00         
-    17 00000131 576861742069732074-     res2 db "What is the resistance of circuit #2 in ohms: %5.3lf", 10,0
-    17 0000013A 686520726573697374-
-    17 00000143 616E6365206F662063-
-    17 0000014C 697263756974202332-
-    17 00000155 20696E206F686D733A-
-    17 0000015E 2025352E336C660A00 
-    18 00000167 54686520746F74616C-     res3 db "The total resistance is %5.3lf Ohms.", 10,0 
-    18 00000170 20726573697374616E-
-    18 00000179 63652069732025352E-
-    18 00000182 336C66204F686D732E-
-    18 0000018B 0A00               
-    19 0000018D 5468616E6B20796F75-     thanks db "Thank you. Please follow the exit signs to the front desk.", 10,0
-    19 00000196 2E20506C6561736520-
-    19 0000019F 666F6C6C6F77207468-
-    19 000001A8 652065786974207369-
-    19 000001B1 676E7320746F207468-
-    19 000001BA 652066726F6E742064-
-    19 000001C3 65736B2E0A00       
-    20                                  
-    21 000001C9 256C6600                resans1 db "%lf",0 ;answer to res1
-    22 000001CD 256C6600                resans2 db "%lf",0 ;answer to res2
-    23 000001D1 256C6600                resans3 db "%lf",0 ;answer to res3
-    24                                  
-    25 000001D5 256300                  compyq db "%c",0 ;answer to computer science major question
-    26                                  
-    27 000001D8 0000000080842E41        chrissal dq 1000000.00
-    28 000001E0 14AE47E17AC09240        socialsal dq 1200.12
-    29                                  
-    30                                  segment .bss
-    31                                  
-    32                                  
-    33                                  segment .text
-    34                                  interview:
-    35                                  
-    36                                  ;Backup registers
-    37                                  
-    38 00000000 55                      push rbp
-    39 00000001 4889E5                  mov rbp, rsp
-    40 00000004 57                      push rdi
-    41 00000005 56                      push rsi
-    42 00000006 52                      push rdx
-    43 00000007 51                      push rcx
-    44 00000008 4150                    push r8
-    45 0000000A 4151                    push r9
-    46 0000000C 4152                    push r10
-    47 0000000E 4153                    push r11
-    48 00000010 4154                    push r12
-    49 00000012 4155                    push r13
-    50 00000014 4156                    push r14
-    51 00000016 4157                    push r15
-    52 00000018 53                      push rbx
-    53 00000019 9C                      pushf
-    54                                  
-    55 0000001A 6A00                    push qword 0
-    56                                  
-    57                                   ;Move values from cpp to stack
-    58 0000001C 4989FF                   mov r15, rdi ;string Name
-    59 0000001F F2440F10F8               movsd xmm15, xmm0 ;double Salary
-    60                                  
-    61                                  ;Print "who are you?" with name
-    62 00000024 6A00                    push qword 0
-    63 00000026 B800000000              mov qword rax,0
-    64 0000002B 48BF-                   mov qword rdi, info
-    64 0000002D [0000000000000000] 
-    65 00000035 4C89FE                  mov qword rsi, r15
-    66 00000038 E8(00000000)            call printf
-    67 0000003D 58                      pop rax
+    11                                  
+    12                                  
+    13                                  ;========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1=========2=========3=========4=========5=========6=========7**
+    14                                  
+    15                                  ;Author information
+    16                                  ;  Author name: Rosa Cho
+    17                                  ;  Author email: rkcho317@fullerton.edu
+    18                                  ;
+    19                                  ;Program information
+    20                                  ;  Program name: King of Assembly 
+    21                                  ;  Programming languages: Main function in C++; string and char input/output functions in X86-64
+    22                                  ;  Date program initiated: 2021-Apr-12
+    23                                  ;  Date last updated: 2021-May-16
+    24                                  ;  Files in the program: main.cpp, interview.asm, run.sh
+    25                                  ;
+    26                                  ;Purpose
+    27                                  ;
+    28                                  ;
+    29                                  ;This file
+    30                                  ;  File name: interview.asm
+    31                                  ;  Language: X86-64
+    32                                  ;  Syntax: Intel
+    33                                  ;  Assemble: nasm -f elf64 -l interview.lis -o interview.o interview.asm
+    34                                  ;
+    35                                  ;========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1=========2=========3=========4=========5=========6=========7**
+    36                                  ;
+    37                                  ;Author information
+    38                                  ;  Author name: Rosa Cho
+    39                                  ;  Author email: rkcho317@fullerton.edu
+    40                                  ;
+    41                                  ;Program information
+    42                                  ;  Program name: interview.asm
+    43                                  ;  Programming languages: X86 with one module in C++
+    44                                  ;  Date program began: 2021-Apr-12
+    45                                  ;  Date of last update: 2021-May-16
+    46                                  ;
+    47                                  ;Purpose
+    48                                  ;  The intent of this program is to show some of the basic tools or techniques for working with user inputs of strings (with embedded white space) and chars then output the results to a txt file.
+    49                                  ;
+    50                                  ;Project information
+    51                                  ;  Project files: main.cpp, interview.asm, run.sh
+    52                                  ;  Status: Available for public review.
+    53                                  ;
+    54                                  ;Translator information
+    55                                  ;  Linux: nasm -f elf64 -l interview.lis -o interview.o interview.asm
+    56                                  ;
+    57                                  ;
+    58                                  ;
+    59                                  ;
+    60                                  ;========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1=========2=========3=========4=========5=========6=========7**
+    61                                  ;
+    62                                  extern printf
+    63                                  extern scanf
+    64                                  
+    65                                  name_size equ 100
+    66                                  
+    67                                  global interview
     68                                  
-    69                                  ;Print "wow that's a lot of cash!" with salary
-    70 0000003E 6A00                    push qword 0
-    71 00000040 B800000000              mov qword rax, 0
-    72 00000045 48BF-                   mov rdi, salary
-    72 00000047 [3A00000000000000] 
-    73 0000004F 4889E6                  mov rsi, rsp
-    74 00000052 E8(00000000)            call printf 
-    75 00000057 F2440F103C24            movsd xmm15, [rsp]
-    76 0000005D 58                      pop rax
-    77                                  
-    78                                  
-    79                                  ;Print "Are you Chris Sawyer?" 
-    80 0000005E 6A00                    push qword 0
-    81 00000060 B800000000              mov qword rax, 0
-    82 00000065 48BF-                   mov rdi, who
-    82 00000067 [5D00000000000000] 
-    83 0000006F E8(00000000)            call printf
-    84 00000074 58                      pop rax
-    85                                  
-    86                                  ;Answer the Chris Sawyer Question
-    87 00000075 6A00                    push qword 0
-    88 00000077 B800000000              mov rax,0
-    89                                  mov rdi, chrisq
-    89          ******************       error: symbol `chrisq' undefined
-    90 0000007C 4889E7                  mov rdi, rsp
-    91 0000007F E8(00000000)            call scanf 
+    69                                  segment .data
+    70                                  
+    71 00000000 48656C6C6F2025732E-     info db "Hello %s. I am Ms Fenster. The interview will begin now.",10,0
+    71 00000009 204920616D204D7320-
+    71 00000012 46656E737465722E20-
+    71 0000001B 54686520696E746572-
+    71 00000024 766965772077696C6C-
+    71 0000002D 20626567696E206E6F-
+    71 00000036 772E0A00           
+    72 0000003A 576F77212025352E33-     salary db "Wow! %5.3lf That's a lot of cash.", 10,0
+    72 00000043 6C6620546861742773-
+    72 0000004C 2061206C6F74206F66-
+    72 00000055 20636173682E0A00   
+    73 0000005D 57686F20646F20796F-     who db "Who do you think you are, Chris Sawyer (y or n)?: %c", 10,0
+    73 00000066 75207468696E6B2079-
+    73 0000006F 6F75206172652C2043-
+    73 00000078 687269732053617779-
+    73 00000081 6572202879206F7220-
+    73 0000008A 6E293F3A2025630A00 
+    74 00000093 5765726520796F7520-     compy db "Were you a computer science major (y or n)?: %c ",10, 0
+    74 0000009C 6120636F6D70757465-
+    74 000000A5 7220736369656E6365-
+    74 000000AE 206D616A6F72202879-
+    74 000000B7 206F72206E293F3A20-
+    74 000000C0 2563200A00         
+    75 000000C5 416C72696768742E20-     elec1 db "Alright.  Now we will work on your electricity.", 10,0
+    75 000000CE 204E6F772077652077-
+    75 000000D7 696C6C20776F726B20-
+    75 000000E0 6F6E20796F75722065-
+    75 000000E9 6C6563747269636974-
+    75 000000F2 792E0A00           
+    76 000000F6 506C6561736520656E-     res1 db "Please enter the resistance of circuit #1 in ohms: %5.3lf", 10,0
+    76 000000FF 746572207468652072-
+    76 00000108 6573697374616E6365-
+    76 00000111 206F66206369726375-
+    76 0000011A 697420233120696E20-
+    76 00000123 6F686D733A2025352E-
+    76 0000012C 336C660A00         
+    77 00000131 576861742069732074-     res2 db "What is the resistance of circuit #2 in ohms: %5.3lf", 10,0
+    77 0000013A 686520726573697374-
+    77 00000143 616E6365206F662063-
+    77 0000014C 697263756974202332-
+    77 00000155 20696E206F686D733A-
+    77 0000015E 2025352E336C660A00 
+    78 00000167 54686520746F74616C-     res3 db "The total resistance is %5.3lf Ohms.", 10,0 
+    78 00000170 20726573697374616E-
+    78 00000179 63652069732025352E-
+    78 00000182 336C66204F686D732E-
+    78 0000018B 0A00               
+    79 0000018D 5468616E6B20796F75-     thanks db "Thank you. Please follow the exit signs to the front desk.", 10,0
+    79 00000196 2E20506C6561736520-
+    79 0000019F 666F6C6C6F77207468-
+    79 000001A8 652065786974207369-
+    79 000001B1 676E7320746F207468-
+    79 000001BA 652066726F6E742064-
+    79 000001C3 65736B2E0A00       
+    80                                  
+    81 000001C9 256C6600                resans1 db "%lf",0 ;answer to res1
+    82 000001CD 256C6600                resans2 db "%lf",0 ;answer to res2
+    83 000001D1 256C6600                resans3 db "%lf",0 ;answer to res3
+    84                                  
+    85 000001D5 256300                  compyq db "%c",0 ;answer to computer science major question
+    86 000001D8 256300                  chrisq db "%c",0 ;answer to the are you chris sawyer question
+    87                                  
+    88 000001DB 0000000080842E41        chrissal dq 1000000.00
+    89 000001E3 14AE47E17AC09240        socialsal dq 1200.12
+    90                                  
+    91                                  segment .bss
     92                                  
-    93                                  ;If yes to Chris Sawyer
-    94 00000084 4883FF79                cmp rdi, 'y'
-    95 00000088 F20F100425-             movsd xmm0, [chrissal]
-    95 0000008D [D8010000]         
-    96 00000091 F2440F10F8              movsd xmm15, xmm0
-    97 00000096 E997000000              jmp final
+    93                                  
+    94                                  segment .text
+    95                                  interview:
+    96                                  
+    97                                  ;Backup registers
     98                                  
-    99                                  ;If no to Chris Sawyer
-   100 0000009B 4883FF6E                cmp rdi, 'n'
-   101 0000009F EB60                    jmp major
-   102                                  
-   103                                  ;===BEGIN ELECTRICITY TEST===
-   104                                  electricity: 
-   104          ******************       error: label `electricity' changed during code generation [-w+error=label-redef-late]
-   105                                  
-   106                                  ;Print Message that begins the Electricity Test
-   107 000000A1 6A00                    push qword 0
-   108 000000A3 B800000000              mov qword rax,0
-   109 000000A8 48BF-                   mov rdi, elec1
-   109 000000AA [C500000000000000] 
-   110 000000B2 E8(00000000)            call printf 
-   111 000000B7 58                      pop rax
-   112                                  
-   113                                  ;Print Question 1
-   114 000000B8 6A00                    push qword 0
-   115 000000BA B800000000              mov qword rax, 0 
-   116 000000BF 48BF-                   mov rdi, res1
-   116 000000C1 [F600000000000000] 
-   117 000000C9 E8(00000000)            call printf 
-   118 000000CE 58                      pop rax
-   119                                  
-   120                                  ;Accept Answer for Q1
-   121 000000CF 6A00                    push qword 0
-   122 000000D1 B800000000              mov rax, 0
-   123 000000D6 48BF-                   mov rdi, resans1
-   123 000000D8 [C901000000000000] 
-   124                                  mov rdi, xmm0 
-   124          ******************       error: invalid combination of opcode and operands
-   125 000000E0 E8(00000000)            call scanf
-   126                                  
-   127                                  ;Print Question 2
-   128 000000E5 6A00                    push qword 0
-   129 000000E7 B800000000              mov qword rax, 0 
-   130 000000EC 48BF-                   mov rdi, res2
-   130 000000EE [3101000000000000] 
-   131 000000F6 E8(00000000)            call printf 
-   132 000000FB 58                      pop rax
-   133                                  
-   134                                  ;Accept Answer for Q2
-   135                                  
-   136                                  ;Show Total Resistance
-   137                                  
-   138                                  ;== Are you a Computer Science Major Block ==
-   139                                  major:
-   139          ******************       error: label `major' changed during code generation [-w+error=label-redef-late]
-   140                                  ;Print Computer Science Major Question
-   141 000000FC 6A00                    push qword 0
-   142 000000FE B800000000              mov qword rax, 0
-   143 00000103 48BF-                   mov rdi, compy
-   143 00000105 [9300000000000000] 
-   144 0000010D E8(00000000)            call printf
-   145 00000112 58                      pop rax
-   146                                  
-   147                                  ;If yes to Computer science major
-   148 00000113 4883FF79                cmp rdi, 'y'
-   149 00000117 EB19                    jmp final
-   150                                  
-   151                                  ;If no to Computer Science major
-   152 00000119 4883FF6E                cmp rdi, 'n'
-   153 0000011D F20F100425-             movsd xmm0, [socialsal]
-   153 00000122 [E0010000]         
-   154 00000126 F2440F10F8              movsd xmm15, xmm0
-   155 0000012B EB05                    jmp final
-   156                                  
-   157                                  
-   158                                  
-   159                                  ; == FINAL prints a final message and sends a code to the main.cpp == 
-   160                                  final: 
-   160          ******************       error: label `final' changed during code generation [-w+error=label-redef-late]
-   161                                  
-   162                                  ;Thank you message
-   163 0000012D 6A00                    push qword 0
-   164 0000012F B800000000              mov qword rax,0
-   165 00000134 48BF-                   mov rdi, thanks
-   165 00000136 [8D01000000000000] 
-   166 0000013E E8(00000000)            call printf
+    99 00000000 55                      push rbp
+   100 00000001 4889E5                  mov rbp, rsp
+   101 00000004 57                      push rdi
+   102 00000005 56                      push rsi
+   103 00000006 52                      push rdx
+   104 00000007 51                      push rcx
+   105 00000008 4150                    push r8
+   106 0000000A 4151                    push r9
+   107 0000000C 4152                    push r10
+   108 0000000E 4153                    push r11
+   109 00000010 4154                    push r12
+   110 00000012 4155                    push r13
+   111 00000014 4156                    push r14
+   112 00000016 4157                    push r15
+   113 00000018 53                      push rbx
+   114 00000019 9C                      pushf
+   115                                  
+   116 0000001A 6A00                    push qword 0
+   117                                  
+   118                                   ;Move values from cpp to stack
+   119 0000001C 4989FF                   mov r15, rdi ;string Name
+   120 0000001F F2440F10F8               movsd xmm15, xmm0 ;double Salary
+   121                                  
+   122                                  ;Print "who are you?" with name
+   123 00000024 6A00                    push qword 0
+   124 00000026 B800000000              mov qword rax,0
+   125 0000002B 48BF-                   mov qword rdi, info
+   125 0000002D [0000000000000000] 
+   126 00000035 4C89FE                  mov qword rsi, r15
+   127 00000038 E8(00000000)            call printf
+   128 0000003D 58                      pop rax
+   129                                  
+   130                                  
+   131                                  ;Print "wow that's a lot of cash!" with salary
+   132 0000003E 6A00                    push qword 0
+   133 00000040 B800000000              mov qword rax, 0
+   134 00000045 48BF-                   mov rdi, salary
+   134 00000047 [3A00000000000000] 
+   135 0000004F 4889E6                  mov rsi, rsp
+   136 00000052 E8(00000000)            call printf 
+   137 00000057 F2440F103C24            movsd xmm15, [rsp]
+   138 0000005D 58                      pop rax
+   139                                  
+   140                                  
+   141                                  ;Print "Are you Chris Sawyer?" 
+   142 0000005E 6A00                    push qword 0
+   143 00000060 B800000000              mov qword rax, 0
+   144 00000065 48BF-                   mov rdi, who
+   144 00000067 [5D00000000000000] 
+   145 0000006F E8(00000000)            call printf
+   146 00000074 58                      pop rax
+   147                                  
+   148                                  ;Answer the Chris Sawyer Question
+   149 00000075 6A00                    push qword 0
+   150 00000077 B800000000              mov rax,0
+   151 0000007C 48BF-                   mov rdi, chrisq
+   151 0000007E [D801000000000000] 
+   152 00000086 4889E7                  mov rdi, rsp
+   153 00000089 E8(00000000)            call scanf 
+   154                                  
+   155                                  ;If yes to Chris Sawyer
+   156 0000008E 4883FF79                cmp rdi, 'y'
+   157 00000092 F20F100425-             movsd xmm0, [chrissal]
+   157 00000097 [DB010000]         
+   158 0000009B F2440F10F8              movsd xmm15, xmm0
+   159 000000A0 E9AC000000              jmp final
+   160                                  
+   161                                  ;If no to Chris Sawyer
+   162 000000A5 4883FF6E                cmp rdi, 'n'
+   163 000000A9 EB75                    jmp major
+   164                                  
+   165                                  ;===BEGIN ELECTRICITY TEST===
+   166                                  electricity: 
    167                                  
-   168 00000143 58                       pop rax
-   169 00000144 F2410F10C7               movsd xmm0,xmm15 ;Sends a code to the main.cpp 
-   170 00000149 9D                       popf                                                 
-   171 0000014A 5B                       pop rbx                                                     
-   172 0000014B 415F                     pop r15                                                     
-   173 0000014D 415E                     pop r14                                                      
-   174 0000014F 415D                     pop r13                                                      
-   175 00000151 415C                     pop r12                                                      
-   176 00000153 415B                     pop r11                                                     
-   177 00000155 415A                     pop r10                                                     
-   178 00000157 4159                     pop r9                                                      
-   179 00000159 4158                     pop r8                                                      
-   180 0000015B 59                       pop rcx                                                     
-   181 0000015C 5A                       pop rdx                                                     
-   182 0000015D 5E                       pop rsi                                                     
-   183 0000015E 5F                       pop rdi                                                     
-   184 0000015F 5D                       pop rbp
-   185                                  
-   186                                  
-   187                                     
-   188 00000160 C3                      ret
-   189                                  
+   168                                  ;Print Message that begins the Electricity Test
+   169 000000AB 6A00                    push qword 0
+   170 000000AD B800000000              mov qword rax,0
+   171 000000B2 48BF-                   mov rdi, elec1
+   171 000000B4 [C500000000000000] 
+   172 000000BC E8(00000000)            call printf 
+   173 000000C1 58                      pop rax
+   174                                  
+   175                                  ;Print Question 1
+   176 000000C2 6A00                    push qword 0
+   177 000000C4 B800000000              mov qword rax, 0 
+   178 000000C9 48BF-                   mov rdi, res1
+   178 000000CB [F600000000000000] 
+   179 000000D3 E8(00000000)            call printf 
+   180 000000D8 58                      pop rax
+   181                                  
+   182                                  ;Accept Answer for Q1
+   183 000000D9 B801000000              mov rax,1 
+   184 000000DE 4889E7                  mov rdi, rsp
+   185 000000E1 6A00                    push qword 0
+   186 000000E3 4889E6                  mov rsi, rsp
+   187 000000E6 E8(00000000)            call scanf
+   188 000000EB F2440F101424            movsd xmm10, [rsp]
+   189 000000F1 58                      pop rax
+   190                                  
+   191                                  ;Print Question 2
+   192 000000F2 6A00                    push qword 0
+   193 000000F4 B800000000              mov qword rax, 0 
+   194 000000F9 488B3C25[31010000]      mov rdi, [res2]
+   195 00000101 E8(00000000)            call printf 
+   196 00000106 58                      pop rax
+   197                                  
+   198                                  ;Accept Answer for Q2
+   199 00000107 B801000000              mov rax,1 
+   200 0000010C 4889E7                  mov rdi, rsp
+   201 0000010F 6A00                    push qword 0
+   202 00000111 4889E6                  mov rsi, rsp
+   203 00000114 E8(00000000)            call scanf
+   204 00000119 F2440F101C24            movsd xmm11, [rsp]
+   205 0000011F 58                      pop rax
+   206                                  
+   207                                  ;Show Total Resistance
+   208                                  
+   209                                  ;== Are you a Computer Science Major Block ==
+   210                                  major:
+   211                                  ;Print Computer Science Major Question
+   212 00000120 6A00                    push qword 0
+   213 00000122 B800000000              mov qword rax, 0
+   214 00000127 48BF-                   mov rdi, compy
+   214 00000129 [9300000000000000] 
+   215 00000131 E8(00000000)            call printf
+   216 00000136 58                      pop rax
+   217                                  
+   218                                  ;If yes to Computer science major
+   219 00000137 4883FF79                cmp rdi, 'y'
+   220 0000013B EB14                    jmp final
+   221                                  
+   222                                  ;If no to Computer Science major
+   223 0000013D 4883FF6E                cmp rdi, 'n'
+   224 00000141 F20F100425-             movsd xmm0, [socialsal]
+   224 00000146 [E3010000]         
+   225 0000014A F2440F10F8              movsd xmm15, xmm0
+   226 0000014F EB00                    jmp final
+   227                                  
+   228                                  
+   229                                  
+   230                                  ; == FINAL prints a final message and sends a code to the main.cpp == 
+   231                                  final: 
+   232                                  
+   233                                  ;Thank you message
+   234 00000151 6A00                    push qword 0
+   235 00000153 B800000000              mov qword rax,0
+   236 00000158 48BF-                   mov rdi, thanks
+   236 0000015A [8D01000000000000] 
+   237 00000162 E8(00000000)            call printf
+   238                                  
+   239 00000167 58                       pop rax
+   240 00000168 F2410F10C7               movsd xmm0,xmm15 ;Sends a code to the main.cpp 
+   241 0000016D 9D                       popf                                                 
+   242 0000016E 5B                       pop rbx                                                     
+   243 0000016F 415F                     pop r15                                                     
+   244 00000171 415E                     pop r14                                                      
+   245 00000173 415D                     pop r13                                                      
+   246 00000175 415C                     pop r12                                                      
+   247 00000177 415B                     pop r11                                                     
+   248 00000179 415A                     pop r10                                                     
+   249 0000017B 4159                     pop r9                                                      
+   250 0000017D 4158                     pop r8                                                      
+   251 0000017F 59                       pop rcx                                                     
+   252 00000180 5A                       pop rdx                                                     
+   253 00000181 5E                       pop rsi                                                     
+   254 00000182 5F                       pop rdi                                                     
+   255 00000183 5D                       pop rbp
+   256                                  
+   257                                  
+   258                                     
+   259 00000184 C3                      ret
+   260                                  
