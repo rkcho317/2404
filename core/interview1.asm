@@ -61,10 +61,10 @@
 ;
 extern printf
 extern scanf
+extern main
 
 name_size equ 100
 
-global _interview
 global interview
 
 segment .data
@@ -94,8 +94,8 @@ segment .bss
 
 
 segment .text
-_interview:
 interview:
+
 ;Backup registers
 
 push rbp

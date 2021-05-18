@@ -13,12 +13,12 @@ echo "Compile the C++ file main.cpp"
 g++ -c -m64 -Wall -std=c++14 -o main.o -fno-pie -no-pie main.cpp
 
 echo "Link the 'O' files main.o and interview.o"
-g++ -m64 -std=c++14 -fno-pie -no-pie -g -o interview.out main.o interview.o
+g++ -m64 -std=c++14 -fno-pie -no-pie -o interview.out main.o interview.o
 
 echo "Run the program King of Assembly"
 ./interview.out
 
 #echo "Print the results of the Questions and Answers"
-#./interview.out < results.txt
+#./interview.out > results.txt
 
 echo "This Bash script file will now terminate.  Bye."

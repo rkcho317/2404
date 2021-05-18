@@ -10,13 +10,7 @@
 			"path": "../2403"
 		},
 		{
-			"path": "../string-io"
-		},
-		{
-			"path": "../string-io-syscall"
-		},
-		{
-			"path": "../2402"
+			"path": "../2404"
 		}
 	],
 	"settings": {

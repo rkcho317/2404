@@ -61,10 +61,10 @@
     61                                  ;
     62                                  extern printf
     63                                  extern scanf
-    64                                  extern main
-    65                                  
-    66                                  name_size equ 100
-    67                                  
+    64                                  
+    65                                  name_size equ 100
+    66                                  
+    67                                  global _interview
     68                                  global interview
     69                                  
     70                                  segment .data
@@ -139,8 +139,8 @@
     94                                  
     95                                  
     96                                  segment .text
-    97                                  interview:
-    98                                  
+    97                                  _interview:
+    98                                  interview:
     99                                  ;Backup registers
    100                                  
    101 00000000 55                      push rbp
