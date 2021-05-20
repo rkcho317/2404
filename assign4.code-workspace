@@ -10,7 +10,22 @@
 			"path": "../2403"
 		},
 		{
-			"path": "../2404"
+			"path": "../Test1_240"
+		},
+		{
+			"path": "../miterm1_old"
+		},
+		{
+			"path": "../Final_Exam"
+		},
+		{
+			"path": "../2402"
+		},
+		{
+			"path": "../arrays"
+		},
+		{
+			"path": "../arrays_live"
 		}
 	],
 	"settings": {
@@ -73,7 +88,10 @@
 			"xstddef": "cpp",
 			"xstring": "cpp",
 			"xtr1common": "cpp",
-			"xutility": "cpp"
+			"xutility": "cpp",
+			"iomanip": "cpp",
+			"xlocmon": "cpp",
+			"xloctime": "cpp"
 		}
 	}
 }

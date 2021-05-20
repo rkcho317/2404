@@ -16,9 +16,6 @@ echo "Link the 'O' files main.o and interview.o"
 g++ -m64 -std=c++14 -fno-pie -no-pie -o interview.out main.o interview.o
 
 echo "Run the program King of Assembly"
-./interview.out
-
-#echo "Print the results of the Questions and Answers"
-#./interview.out > results.txt
+./interview.out 
 
 echo "This Bash script file will now terminate.  Bye."

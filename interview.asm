@@ -62,9 +62,6 @@
 extern printf
 extern scanf
 
-name_size equ 100
-
-global _interview
 global interview
 
 segment .data
@@ -84,6 +81,7 @@ resans2 db "%lf",0 ;answer to res2
 
 compyq db "%s",0 ;answer to the computer science major question
 chrisq db "%s",0 ;answer to the Chris Sawyer question
+stringformat db "%s", 0
 
 compscisal dq 88000.88
 chrissal dq 1000000.00
@@ -94,7 +92,7 @@ segment .bss
 
 
 segment .text
-_interview:
+
 interview:
 ;Backup registers
 
@@ -151,9 +149,8 @@ mov rsi, rsp
 call scanf
 
 ;Compare if answer is 'y' or 'n'
-mov rax, 121
-cmp rax, [rsp]
-
+mov r14, 'y'
+cmp [rsp], r14
 je chris_yes
 jne chris_no
 
@@ -222,43 +219,37 @@ call printf
 ;== Are you a Computer Science Major Block ==
 major:
 ;Print Computer Science Major Question
-mov rax,0
+mov rax, 0
 mov rdi, compy
 call printf
 
 ;Accept answer to the CS Major Question
-mov rax, 0
+mov rax, 1
 mov rdi, compyq ;%s
 mov rsi, rsp
 call scanf
 
 ;Compare if answer is 'y' or 'n'
-mov rax, 121
-cmp rax, [rsp]
-
-je cs_yes
-jne cs_no
-
-;If yes to Computer science major
-cs_yes:
-movsd xmm15, [compscisal]
-jmp final
+mov r13, 'y'
+cmp rax, r13
+je cs_major
 
 ;If no to Computer Science major
-cs_no:
 movsd xmm15, [socialsal]
 jmp final
 
+;If yes to Computer science major
+cs_major:
+movsd xmm15, [compscisal]
 
 ; == FINAL prints a final message and sends a code to the main.cpp == 
 final: 
-
 ;Thank you message
 push qword 0
-mov qword rax,0
+mov rax, 0
 mov rdi, thanks
-call printf
 
+call printf
  pop rax
  movsd xmm0,xmm15 ;Sends a code to the main.cpp 
  popf                                                 
@@ -277,7 +268,4 @@ call printf
  pop rdi                                                     
  pop rbp
 
-
-   
 ret
-

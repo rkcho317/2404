@@ -1,4 +1,0 @@
-Welcome to Software Analysis by Paramount Programmers, Inc. Please enter your first and last names and press enter: 
-Thank you 
-Our records show that you applied for employment her with our agency a week ago.
-Please enter your expected annual salary when employed at Paramount: 

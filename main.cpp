@@ -43,8 +43,7 @@ This file
 #include <stdint.h>
 #include <string>
 
-extern "C" void _interview(char ident[], double sal);
-extern "C" double interview();
+extern "C" double interview(char ident[], double sal);
 
 int main(){
 
@@ -64,15 +63,11 @@ int main(){
     printf("%s\n", "Your interview with Ms Linda Fenster, Personnel Manager, will begin shortly.");
 
     //Send Name and Salary to interview.asm
-    _interview(ident, sal);
+    noble = interview(ident, sal);
    
-
     //After the Interview
 
-    //Take the code returned from the asm driver and use it to determine what will be the employee's final salary
-     noble = interview();
-
-    if (noble ==88000.88){  //Floating point 88000.88 is returned to front desk whenever CS major completes interview and answers the questions about the Ohms correctly
+    if (noble == 88000.88){  //Floating point 88000.88 is returned to front desk whenever CS major completes interview and answers the questions about the Ohms correctly
   
         std::cout<<"Hello " << ident << " .I am the receptionist"<<std::endl;
         std::cout<<"This envelope contains your job offer with starting salary 88000.88.\nPlease check back on Monday morning at 8am.\nBye"<<std::endl;
@@ -96,9 +91,6 @@ int main(){
       else{
         return 0;
       }
-  
 
-
-return 0;
     
 }
