@@ -222,25 +222,27 @@ major:
 mov rax, 0
 mov rdi, compy
 call printf
+pop rax
 
 ;Accept answer to the CS Major Question
-mov rax, 1
+push qword  99
+mov rax, 0
 mov rdi, compyq ;%s
 mov rsi, rsp
 call scanf
 
 ;Compare if answer is 'y' or 'n'
-mov r13, 'y'
-cmp rax, r13
-je cs_major
+mov rax, 121
+cmp rax, [rsp]
+jne cs_no
 
-;If no to Computer Science major
-movsd xmm15, [socialsal]
+;If yes to Computer Science major
+movsd xmm15, [compscisal]
 jmp final
 
-;If yes to Computer science major
-cs_major:
-movsd xmm15, [compscisal]
+;If no to Computer science major
+cs_no:
+movsd xmm15, [socialsal] 
 
 ; == FINAL prints a final message and sends a code to the main.cpp == 
 final: 

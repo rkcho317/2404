@@ -207,7 +207,7 @@
    158                                  chris_yes:
    159 00000094 F2440F103C25-           movsd xmm15, [chrissal]
    159 0000009A [E2010000]         
-   160 0000009E E92A010000              jmp final
+   160 0000009E E92D010000              jmp final
    161                                  
    162                                  ;If no to Chris Sawyer
    163                                  chris_no:
@@ -282,59 +282,56 @@
    223 00000186 48BF-                   mov rdi, compy
    223 00000188 [9300000000000000] 
    224 00000190 E8(00000000)            call printf
-   225                                  
-   226                                  ;Accept answer to the CS Major Question
-   227 00000195 B801000000              mov rax, 1
-   228 0000019A 48BF-                   mov rdi, compyq ;%s
-   228 0000019C [D101000000000000] 
-   229 000001A4 4889E6                  mov rsi, rsp
-   230 000001A7 E8(00000000)            call scanf
-   231                                  
-   232                                  ;Compare if answer is 'y' or 'n'
-   233 000001AC 41BD79000000            mov r13, 'y'
-   234 000001B2 4C39E8                  cmp rax, r13
-   235 000001B5 740C                    je cs_major
-   236                                  
-   237                                  ;If no to Computer Science major
-   238                                  ;cs_no:
-   239 000001B7 F2440F103C25-           movsd xmm15, [socialsal]
-   239 000001BD [EA010000]         
-   240 000001C1 EB0A                    jmp final
-   241                                  
-   242                                  ;If yes to Computer science major
-   243                                  cs_major:
-   244 000001C3 F2440F103C25-           movsd xmm15, [compscisal]
-   244 000001C9 [DA010000]         
-   245                                  ;jmp final
+   225 00000195 58                      pop rax
+   226                                  
+   227                                  ;Accept answer to the CS Major Question
+   228 00000196 6A63                    push qword  99
+   229 00000198 B800000000              mov rax, 0
+   230 0000019D 48BF-                   mov rdi, compyq ;%s
+   230 0000019F [D101000000000000] 
+   231 000001A7 4889E6                  mov rsi, rsp
+   232 000001AA E8(00000000)            call scanf
+   233                                  
+   234                                  ;Compare if answer is 'y' or 'n'
+   235 000001AF B879000000              mov rax, 121
+   236 000001B4 483B0424                cmp rax, [rsp]
+   237 000001B8 750C                    jne cs_no
+   238                                  
+   239                                  ;If yes to Computer Science major
+   240 000001BA F2440F103C25-           movsd xmm15, [compscisal]
+   240 000001C0 [DA010000]         
+   241 000001C4 EB0A                    jmp final
+   242                                  
+   243                                  ;If no to Computer science major
+   244                                  cs_no:
+   245 000001C6 F2440F103C25-           movsd xmm15, [socialsal] 
+   245 000001CC [EA010000]         
    246                                  
-   247                                  
-   248                                  
-   249                                  
-   250                                  ; == FINAL prints a final message and sends a code to the main.cpp == 
-   251                                  final: 
-   252                                  ;Thank you message
-   253 000001CD 6A00                    push qword 0
-   254 000001CF B800000000              mov rax, 0
-   255 000001D4 48BF-                   mov rdi, thanks
-   255 000001D6 [8D01000000000000] 
-   256                                  
-   257 000001DE E8(00000000)            call printf
-   258 000001E3 58                       pop rax
-   259 000001E4 F2410F10C7               movsd xmm0,xmm15 ;Sends a code to the main.cpp 
-   260 000001E9 9D                       popf                                                 
-   261 000001EA 5B                       pop rbx                                                     
-   262 000001EB 415F                     pop r15                                                     
-   263 000001ED 415E                     pop r14                                                      
-   264 000001EF 415D                     pop r13                                                      
-   265 000001F1 415C                     pop r12                                                      
-   266 000001F3 415B                     pop r11                                                     
-   267 000001F5 415A                     pop r10                                                     
-   268 000001F7 4159                     pop r9                                                      
-   269 000001F9 4158                     pop r8                                                      
-   270 000001FB 59                       pop rcx                                                     
-   271 000001FC 5A                       pop rdx                                                     
-   272 000001FD 5E                       pop rsi                                                     
-   273 000001FE 5F                       pop rdi                                                     
-   274 000001FF 5D                       pop rbp
-   275                                  
-   276 00000200 C3                      ret
+   247                                  ; == FINAL prints a final message and sends a code to the main.cpp == 
+   248                                  final: 
+   249                                  ;Thank you message
+   250 000001D0 6A00                    push qword 0
+   251 000001D2 B800000000              mov rax, 0
+   252 000001D7 48BF-                   mov rdi, thanks
+   252 000001D9 [8D01000000000000] 
+   253                                  
+   254 000001E1 E8(00000000)            call printf
+   255 000001E6 58                       pop rax
+   256 000001E7 F2410F10C7               movsd xmm0,xmm15 ;Sends a code to the main.cpp 
+   257 000001EC 9D                       popf                                                 
+   258 000001ED 5B                       pop rbx                                                     
+   259 000001EE 415F                     pop r15                                                     
+   260 000001F0 415E                     pop r14                                                      
+   261 000001F2 415D                     pop r13                                                      
+   262 000001F4 415C                     pop r12                                                      
+   263 000001F6 415B                     pop r11                                                     
+   264 000001F8 415A                     pop r10                                                     
+   265 000001FA 4159                     pop r9                                                      
+   266 000001FC 4158                     pop r8                                                      
+   267 000001FE 59                       pop rcx                                                     
+   268 000001FF 5A                       pop rdx                                                     
+   269 00000200 5E                       pop rsi                                                     
+   270 00000201 5F                       pop rdi                                                     
+   271 00000202 5D                       pop rbp
+   272                                  
+   273 00000203 C3                      ret
